@@ -150,7 +150,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.lightBlueAccent,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(8),
                   ),
 
                   child: const Text(
