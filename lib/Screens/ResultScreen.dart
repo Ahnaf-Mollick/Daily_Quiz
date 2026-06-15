@@ -53,7 +53,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Marks: $totalMarks",
+                        "Marks: $totalMarks out of 3",
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
@@ -80,6 +80,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 ],
               ),
             ),
+            const Spacer(),
 
             // Restart button
             SafeArea(
