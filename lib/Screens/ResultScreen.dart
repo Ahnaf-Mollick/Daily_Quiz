@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../data/dataManager.dart';
-import 'QustionScreen.dart';
+import '../Routes.dart';
+import 'package:get/get.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
@@ -10,8 +10,7 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  final DataManager _dataManager = DataManager();
-
+  int totalMarks = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,39 +23,7 @@ class _ResultScreenState extends State<ResultScreen> {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 1,
-
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15, bottom: 2),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    _dataManager.results = [];
-                    _dataManager.testNumber = 0;
-                    _dataManager.finalMarks = 0;
-                  });
-                },
-                icon: const Icon(
-                  Icons.restart_alt_sharp,
-                  color: Colors.white,
-                  size: 26,
-                ),
-              ),
-            ),
-          ),
-        ],
+        automaticallyImplyLeading: false,
       ),
 
       body: Padding(
@@ -64,68 +31,53 @@ class _ResultScreenState extends State<ResultScreen> {
         child: Column(
           children: [
             // Results list
-            Expanded(
-              child: ListView.builder(
-                itemCount: _dataManager.results.length,
-                itemBuilder: (context, index) {
-                  final result = _dataManager.results[index];
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
+                  ),
+                ],
+              ),
 
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(18),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10,
-                          offset: Offset(0, 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Marks: $totalMarks",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+
+                  CircleAvatar(
+                    radius: 28,
+                    backgroundColor: totalMarks == 3
+                        ? Colors.lightGreen
+                        : totalMarks == 2
+                        ? Colors.lightBlueAccent
+                        : Colors.redAccent,
+                    child: Text(
+                      "$totalMarks",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Test ${result['test']}",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-
-                            const SizedBox(height: 8),
-
-                            Text(
-                              "Marks: ${result['marks']}",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        CircleAvatar(
-                          radius: 28,
-                          backgroundColor: Colors.lightBlueAccent,
-                          child: Text(
-                            "${result['marks']}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                  ),
+                ],
               ),
             ),
 
@@ -133,15 +85,7 @@ class _ResultScreenState extends State<ResultScreen> {
             SafeArea(
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _dataManager.finalMarks = 0;
-                  });
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const QuestionScreen(),
-                    ),
-                  );
+                  Get.toNamed(Routes.QUESTIONSCREEN);
                 },
 
                 child: Container(

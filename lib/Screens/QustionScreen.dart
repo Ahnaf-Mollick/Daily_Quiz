@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../data/dataManager.dart';
+import 'package:get/get.dart';
+import 'package:quiz_app/Routes.dart';
 import 'ResultScreen.dart';
 
 class QuestionScreen extends StatefulWidget {
@@ -11,10 +11,39 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  final DataManager _dataManager = DataManager();
-  late final List<Map<String, dynamic>> _questionList =
-      _dataManager.questions_list;
-  late int totalmarks = _dataManager.finalMarks;
+  final List<Map<String, dynamic>> _questionList = [
+    {
+      "question": "Flutter এ State Management কেন দরকার?",
+      "options": [
+        "UI design করার জন্য",
+        "Data এবং UI update control করার জন্য",
+        "App install করার জন্য",
+        "Image load করার জন্য",
+      ],
+      "answer": 1,
+    },
+    {
+      "question": "setState() কী করে?",
+      "options": [
+        "App বন্ধ করে",
+        "UI rebuild করে",
+        "Database delete করে",
+        "API call করে",
+      ],
+      "answer": 1,
+    },
+    {
+      "question": "StatefulWidget কখন ব্যবহার করা হয়?",
+      "options": [
+        "যখন UI change হয় না",
+        "যখন UI dynamic/changeable হয়",
+        "শুধু image দেখানোর জন্য",
+        "শুধু text দেখানোর জন্য",
+      ],
+      "answer": 1,
+    },
+  ];
+  int totalMarks = 0;
   int currentQuestionIndex = 0;
   bool isAnswered = false;
   int? currentAnswerIndex;
@@ -23,7 +52,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     setState(() {
       currentAnswerIndex = index;
       if (currentAnswerIndex == _questionList[currentQuestionIndex]['answer']) {
-        totalmarks++;
+        totalMarks++;
         isAnswered = true;
       } else {
         isAnswered = true;
@@ -44,17 +73,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   void submitQuiz() {
     setState(() {
-      _dataManager.finalMarks = totalmarks;
-      _dataManager.testNumber + 1;
-      _dataManager.addResult();
-      currentQuestionIndex = 0;
-      currentAnswerIndex = null;
       isAnswered = false;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ResultScreen()),
-      );
+      currentAnswerIndex = null;
+      currentAnswerIndex = 0;
     });
+    Get.toNamed(Routes.RESULTSCREEN, arguments: totalMarks);
   }
 
   @override
@@ -71,6 +94,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         ),
         backgroundColor: Colors.white54,
         elevation: 1,
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
