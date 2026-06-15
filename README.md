@@ -19,7 +19,7 @@ State management is handled using **Dart classes and objects** without using Get
     </td>
     <td align="center">
       <b>Result History</b><br>
-      <img src="https://github.com/user-attachments/assets/f9f04265-70d3-42fd-8201-b1fbb948e052" width="240"/>
+      <img src="https://github.com/user-attachments/assets/5a216379-5cf5-4d51-8bdf-4a02620d56a0" width="240"/>
     </td>
   </tr>
 </table>
