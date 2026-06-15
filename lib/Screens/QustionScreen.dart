@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app/Routes.dart';
-import 'ResultScreen.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key});
